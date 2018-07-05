@@ -17,6 +17,8 @@ public class ButtonManager : MonoBehaviour
 
     public List<GameObject> ahaPages, cviPages;
 
+    public List<GameObject> ahaPageWithSkip, cviPageWithSkip;
+
     //Button function for Home Button of All Pages
     public void btnHome()
     {
@@ -43,18 +45,21 @@ public class ButtonManager : MonoBehaviour
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[0].SetActive(true);
+        cviPage1.SetActive(false);
     }
     public void CVIBtnSafe()
     {
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[1].SetActive(true);
+        cviPage1.SetActive(false);
     }
     public void CVIBtnStrength()
     {
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[3].SetActive(true);
+        cviPage1.SetActive(false);
     }
     public void CVIBtnSeal()
     {
@@ -70,6 +75,9 @@ public class ButtonManager : MonoBehaviour
     }
     public void CVIBtnSkipOrMenu()
     {
+        foreach (var pages in cviPageWithSkip)
+            pages.SetActive(false);
+
         foreach (var pages in cviPages)
             pages.SetActive(false);
 
@@ -123,9 +131,12 @@ public class ButtonManager : MonoBehaviour
     }
     public void AHABtnSkipOrMenu()
     {
-        foreach (var pages in ahaPages)
+        foreach (var pages in ahaPageWithSkip)
             pages.SetActive(false);
 
+        foreach (var pages in ahaPages)
+            pages.SetActive(false);
+        
         ahaSkipOrMenu.SetActive(true);
     }
 

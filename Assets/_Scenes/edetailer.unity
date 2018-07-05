@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311947, g: 0.38074005, b: 0.35872722, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3766f187f241fd5478e05f1920402c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 0.5
+  zoomSpeed: 1
   maxZoom: 2
 --- !u!1 &28540056
 GameObject:
@@ -13837,6 +13837,14 @@ MonoBehaviour:
   - {fileID: 566005104}
   - {fileID: 1037887381}
   - {fileID: 991424505}
+  ahaPageWithSkip:
+  - {fileID: 212718085}
+  - {fileID: 227993837}
+  - {fileID: 987468126}
+  cviPageWithSkip:
+  - {fileID: 1818680026}
+  - {fileID: 595473924}
+  - {fileID: 176365934}
 --- !u!4 &1975079293
 Transform:
   m_ObjectHideFlags: 0
