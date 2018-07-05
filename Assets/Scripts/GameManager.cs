@@ -4,8 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
+
+    public List<GameObject> restrict;
     public GameObject mask;
+    GameObject clone;
+
     public ColliderScript colScript;
+
+    public float timer;
 
     Vector2 firstPressPos;
     Vector2 secondPressPos;
@@ -16,14 +22,25 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKey(KeyCode.Escape))
             Application.Quit();
 
+        MaskClone();
+        RestrictLetter();
+    }
 
+    void MaskClone()
+    {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-       if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
-       {
-           Instantiate(mask, mousePos, Quaternion.identity);
-       }
-        RestrictLetter();      
+        if (Input.GetMouseButton(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved))
+        {
+            GameObject cloneMask = Instantiate(mask, mousePos, Quaternion.identity);
+            colScript.timer = 0.5f;
+            cloneMask.tag = "Mask";
+            cloneMask.name = "Clone";
+            ColliderScript col = cloneMask.GetComponent<ColliderScript>();
+            CircleCollider2D cc = cloneMask.GetComponent<CircleCollider2D>();
+            //cc.isTrigger = true;
+            Destroy(col, 0.5f);
+        }
     }
 
     void RestrictLetter()
@@ -32,35 +49,42 @@ public class GameManager : MonoBehaviour {
         {
             colScript.restrictLetter = "O";
             colScript.nextLetter = "I";
-            Debug.Log("No more D");
+            restrict[0].SetActive(false);
+            //Debug.Log("No more D");
         }
         if (GameObject.FindGameObjectsWithTag("I").Length == 0)
         {
             colScript.restrictLetter = "X";
             colScript.nextLetter = "O";
-            Debug.Log("No more I");
+            restrict[1].SetActive(false);
+            //Debug.Log("No more I");
         }
         if (GameObject.FindGameObjectsWithTag("O").Length == 0)
         {
             colScript.restrictLetter = "E";
             colScript.nextLetter = "X";
-            Debug.Log("No more O");
+            restrict[2].SetActive(false);
+            //Debug.Log("No more O");
         }
         if (GameObject.FindGameObjectsWithTag("X").Length == 0)
         {
             colScript.restrictLetter = "L";
             colScript.nextLetter = "E";
-            Debug.Log("No more X");
+            restrict[3].SetActive(false);
+            //Debug.Log("No more X");
         }
         if (GameObject.FindGameObjectsWithTag("E").Length == 0)
         {
             colScript.restrictLetter = "";
             colScript.nextLetter = "L";
-            Debug.Log("No more E");
+            restrict[4].SetActive(false);
+            //Debug.Log("No more E");
         }
         if (GameObject.FindGameObjectsWithTag("L").Length == 0)
         {
-            Debug.Log("No more L");
+            //Debug.Log("No more L");
+            colScript.restrictLetter = "I";
+            colScript.nextLetter = "D";
             SceneManager.LoadScene("edetailer");
         }
     }
@@ -69,5 +93,5 @@ public class GameManager : MonoBehaviour {
     {
         SceneManager.LoadScene("edetailer");
     }
-    
+
 }

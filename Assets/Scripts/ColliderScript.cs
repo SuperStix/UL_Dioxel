@@ -6,9 +6,45 @@ public class ColliderScript : MonoBehaviour {
 
     public string restrictLetter;
     public string nextLetter;
+    public GameObject mask;
+    CircleCollider2D cc;
+
+    public float timer;
+
+    private void Start()
+    {
+        cc = this.GetComponent<CircleCollider2D>();
+    }
+
+    private void Update()
+    {
+        timer -= Time.deltaTime;
+
+        if(timer <= 0f)
+        {
+            cc.isTrigger = true;
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+
+       // if(collision.tag == "Mask")
+       // {
+       //     collision.tag = "Restrict";
+	   //
+       //     if(collision.tag == "Restrict")
+       //     {
+       //         Destroy(this.gameObject);
+       //     }
+       // }
+
+
+        if (collision.gameObject.tag == "Mask")
+        {
+            Destroy(this.gameObject);
+        }
+
        
         if(restrictLetter == "I" && nextLetter == "D")
         {
@@ -80,5 +116,6 @@ public class ColliderScript : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
+
     }
 }
