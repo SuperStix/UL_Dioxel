@@ -7,14 +7,20 @@ public class UIZoomImage : MonoBehaviour
     private Vector3 initialScale;
 
     [SerializeField]
-    private float zoomSpeed = 0.1f;
+    private float zoomSpeed = 1f;
     [SerializeField]
     private float maxZoom = 10f;
     private float deltaMagnitudeDiff;
 
+    private void Start()
+    {
+        this.transform.localScale = new Vector3(0.4433602f, 0.2140943f, 0.3495363f);
+    }
+
     private void Awake()
     {
         initialScale = transform.localScale;
+        //initialScale = new Vector3(0.4433602f, 0.2140943f, 0.3495363f);
     }
 
     private void Update()

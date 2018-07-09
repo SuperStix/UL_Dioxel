@@ -6,6 +6,7 @@ public class SwipeManager : MonoBehaviour {
 
     public ButtonManager btnManager;
     public List<GameObject> AHAPages, CVIPages;
+    public GameObject MenuPage, AHAPage, CVIPage;
     public GameObject enlargeTable;
     
     Vector2 firstPressPos;
@@ -14,16 +15,38 @@ public class SwipeManager : MonoBehaviour {
 
     public int ahaSwipe, cviSwipe;
 
-    public bool canSwipe;
+    public float timer;
+
+    public bool canSwipe = false;
+
+    public float minSwipeDistY;
+
+    public float minSwipeDistX;
+
+    private Vector2 startPos;
 
     void Update ()
     {
         if (Input.GetKey(KeyCode.Escape))
             Application.Quit();
 
+
         EnlargeTableActive();
-        Swipe();
+        Swipe_v2();
+        Timer();
 	}
+
+    void Timer()
+    {
+        //timer -= Time.deltaTime;
+        //if (!MenuPage.activeInHierarchy && timer < 0f)
+        //{
+        //    canSwipe = true;
+        //}
+        //else
+        //    canSwipe = false;
+    }
+
 
     void EnlargeTableActive()
     {
@@ -40,7 +63,7 @@ public class SwipeManager : MonoBehaviour {
         {
             //save began touch 2d point
             firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            Debug.Log("firstPressPos: " + firstPressPos);
+            Debug.Log("firstPressPos: " + firstPressPos.y);
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -51,6 +74,7 @@ public class SwipeManager : MonoBehaviour {
             //normalize the 2d vector
             currentSwipe.Normalize();
 
+            Debug.Log("secondPressPos: " + secondPressPos.y);
             ////swipe upwards
             //if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
             //{
@@ -63,19 +87,98 @@ public class SwipeManager : MonoBehaviour {
             //}
 
             //swipe left
-            if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
+            if (currentSwipe.x < 0 && currentSwipe.y < 0.5f && currentSwipe.y > -0.5f)
             {
                 Debug.Log("left swipe");        
-            
+                Debug.Log("y" + currentSwipe.y);
+                Debug.Log("x" + currentSwipe.x);
+
                 SwipeLeft();
             }
             //swipe right
-            if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
+            if (currentSwipe.x > 0 && currentSwipe.y < 0.5f && currentSwipe.y > -0.5f)
             {
                 Debug.Log("right swipe");
+                Debug.Log("y" + currentSwipe.y);
+                Debug.Log("x" + currentSwipe.x);
             
                 SwipeRight();
             }           
+        }
+    }
+
+    void Swipe_v2()
+    {
+
+
+        //touch
+        if (Input.touchCount > 0)
+
+        {
+
+            Touch touch = Input.touches[0];
+
+            switch (touch.phase)
+
+            {
+
+                case TouchPhase.Began:
+
+                    startPos = touch.position;
+
+                    break;
+
+                case TouchPhase.Ended:
+
+                    //float swipeDistVertical = (new Vector3(0, touch.position.y, 0) - new Vector3(0, startPos.y, 0)).magnitude;
+					//
+                    //if (swipeDistVertical > minSwipeDistY)
+					//
+                    //{
+					//
+                    //    float swipeValue = Mathf.Sign(touch.position.y - startPos.y);
+					//
+                    //    if (swipeValue > 0) //up swipe
+                    //    {
+                    //        
+                    //    }
+                    //        //Jump ();
+					//
+                    //    else if (swipeValue < 0)//down swipe
+                    //    {
+                    //        
+                    //    }
+                    //        //Shrink ();
+					//
+                    //}
+
+                    float swipeDistHorizontal = (new Vector3(touch.position.x, 0, 0) - new Vector3(startPos.x, 0, 0)).magnitude;
+
+                    if (swipeDistHorizontal > minSwipeDistX)
+
+                    {
+
+                        float swipeValue = touch.position.x - startPos.x;
+
+                        if (swipeValue > 100)//right swipe
+                        {
+                            Debug.Log(swipeValue);
+                            Debug.Log("Right Swipe");
+                            SwipeRight();
+                        }
+                            //MoveRight ();
+
+                        else if (swipeValue < -100)//left swipe
+                        {
+                            Debug.Log(swipeValue);
+                            Debug.Log("Left Swipe");
+                            SwipeLeft();
+                        }
+                            //MoveLeft ();
+
+                    }
+                    break;
+            }
         }
     }
 
@@ -101,7 +204,8 @@ public class SwipeManager : MonoBehaviour {
         //if the AHA Button from Menu Page tapped
         if (btnManager.categoryPage == 0)
         {
-            AHAPageRight();
+            if(canSwipe)
+                AHAPageRight();
         }
         //if the CVI Button from Menu Page tapped
         else if (btnManager.categoryPage == 1)
@@ -296,7 +400,10 @@ public class SwipeManager : MonoBehaviour {
             foreach (var page in AHAPages)
                 page.SetActive(false);
 
-            AHAPages[2].SetActive(true);
+            MenuPage.SetActive(true);
+            AHAPage.SetActive(false);
+
+            //AHAPages[2].SetActive(true);
         }
         //page_7
         else if (AHAPages[4].activeInHierarchy)
@@ -559,7 +666,10 @@ public class SwipeManager : MonoBehaviour {
             foreach (var page in CVIPages)
                 page.SetActive(false);
 
-            CVIPages[2].SetActive(true);
+            MenuPage.SetActive(true);
+            CVIPage.SetActive(false);
+
+            //CVIPages[2].SetActive(true);
         }
         //page_19
         else if (CVIPages[4].activeInHierarchy)

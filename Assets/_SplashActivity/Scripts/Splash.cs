@@ -15,6 +15,9 @@ public class Splash : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (Input.GetKey((KeyCode.Escape)))
+            Application.Quit();
+
         if(secondsToSplash>0){
             secondsToSplash -= Time.deltaTime;
         }else{

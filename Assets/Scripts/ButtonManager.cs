@@ -5,11 +5,15 @@ using UnityEngine;
 public class ButtonManager : MonoBehaviour
 {
 
+    public SwipeManager sm;
+
     public GameObject menuPage, ahaPage, cviPage; //SBR_02
 
     public GameObject ahaPage1, cviPage1;
 
     public GameObject ahaSkipOrMenu, cviSkipOrMenu;
+
+    public GameObject enlargeTable;
 
     public int categoryPage;
 
@@ -31,9 +35,23 @@ public class ButtonManager : MonoBehaviour
         menuPage.SetActive(true);
     }
 
+    public void btnEnlargeTable()
+    {
+        enlargeTable.transform.localScale = new Vector3(0.4433602f, 0.2140943f, 0.3495363f);
+    }
+
+    void btnTap()
+    {
+        sm.timer = 2f;
+        //.canSwipe = false;
+    }
+
+
     //Button functions for CVI Pages
     public void CVI()
     {
+        btnTap();
+
         menuPage.SetActive(false);
         cviPage.SetActive(true);
         cviPage1.SetActive(true);
@@ -42,6 +60,8 @@ public class ButtonManager : MonoBehaviour
     }
     public void CVIBtnStandard()
     {
+        btnTap();
+
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[0].SetActive(true);
@@ -49,6 +69,8 @@ public class ButtonManager : MonoBehaviour
     }
     public void CVIBtnSafe()
     {
+        btnTap();
+
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[1].SetActive(true);
@@ -56,6 +78,8 @@ public class ButtonManager : MonoBehaviour
     }
     public void CVIBtnStrength()
     {
+        btnTap();
+
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[3].SetActive(true);
@@ -63,18 +87,24 @@ public class ButtonManager : MonoBehaviour
     }
     public void CVIBtnSeal()
     {
+        btnTap();
+
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[2].SetActive(true);
     }
     public void CVIBtnADR()
     {
+        btnTap();
+
         isContinuous = false;
         cviSkipOrMenu.SetActive(false);
         cviPages[4].SetActive(true);
     }
     public void CVIBtnSkipOrMenu()
     {
+        btnTap();
+
         foreach (var pages in cviPageWithSkip)
             pages.SetActive(false);
 
@@ -87,6 +117,8 @@ public class ButtonManager : MonoBehaviour
     //Button functions for AHA Pages
     public void AHA()
     {
+        btnTap();
+
         menuPage.SetActive(false);
         ahaPage.SetActive(true);
         ahaPage1.SetActive(true);
@@ -95,42 +127,56 @@ public class ButtonManager : MonoBehaviour
     }
     public void AHABtnStandard()
     {
+        btnTap();
+
         isContinuous = false;
         ahaSkipOrMenu.SetActive(false);
         ahaPages[0].SetActive(true);
     }
     public void AHABtnSymptoms()
     {
+        btnTap();
+
         isContinuous = false;
         ahaSkipOrMenu.SetActive(false);
         ahaPages[1].SetActive(true);
     }
     public void AHABtnSafe()
     {
+        btnTap();
+
         isContinuous = false;
         ahaSkipOrMenu.SetActive(false);
         ahaPages[2].SetActive(true);
     }
     public void AHABtnSeal()
     {
+        btnTap();
+
         isContinuous = false;
         ahaSkipOrMenu.SetActive(false);
         ahaPages[3].SetActive(true);
     }
     public void AHABtnStrength()
     {
+        btnTap();
+
         isContinuous = false;
         ahaSkipOrMenu.SetActive(false);
         ahaPages[4].SetActive(true);
     }
     public void AHABtnADR()
     {
+        btnTap();
+
         isContinuous = false;
         ahaSkipOrMenu.SetActive(false);
         ahaPages[5].SetActive(true);
     }
     public void AHABtnSkipOrMenu()
     {
+        btnTap();
+
         foreach (var pages in ahaPageWithSkip)
             pages.SetActive(false);
 
